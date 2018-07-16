@@ -1,4 +1,4 @@
-package ru.geekbrains.java1.dz.dz1.Enver_Eskendarov;
+﻿package ru.geekbrains.java1.dz.dz1.Enver_Eskendarov;
 
 public class MainDz {
     public static void main(String[] args) {
@@ -43,15 +43,15 @@ public class MainDz {
     }
 
     public static void vir (int a, int b, int c, int d){
-        int e = a * (b + (c / d));
-      System.out.println("выражение = " + e);
-    };
 
-    public static void sum(int a, int b) {
-        int c = a+b;
-        if ((c >= 10) && (c <= 20)){
-            System.out.println(true);
-        }
+        if (d == 0)
+        {
+            System.out.println("Делить на ноль нельзя");
+        }  else {
+           int e = a * (b + (c / d));
+           System.out.println("выражение = " + e);
+           }
+        };
         else {
             System.out.println(false);
         }
