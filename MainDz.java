@@ -1,4 +1,4 @@
-﻿package ru.geekbrains.java1.dz.dz1.Enver_Eskendarov;
+package ru.geekbrains.java1.dz.dz1.Enver_Eskendarov;
 
 public class MainDz {
     public static void main(String[] args) {
@@ -14,7 +14,7 @@ public class MainDz {
         System.out.println("i = " + i);
         System.out.println("d = " + d);
 
-        vir(2,3,10,2);
+        vir(2,3,10,0);
         sum(5,6);
         posneg(-23);
         name("Энвер");
@@ -52,6 +52,12 @@ public class MainDz {
            System.out.println("выражение = " + e);
            }
         };
+
+    public static void sum(int a, int b) {
+        int c = a+b;
+        if ((c >= 10) && (c <= 20)){
+            System.out.println(true);
+        }
         else {
             System.out.println(false);
         }
