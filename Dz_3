@@ -1,0 +1,33 @@
+package ru.geekbrains.java1.dz_Enver_Eskendarov.dz2;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class Dz_3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Random random = new Random();
+        int sch = random.nextInt(10);
+        System.out.println("Введите число от 0 до 9");
+        int n;
+        do  {
+            for (int i = 0; i < 3; i++) {
+                int a = sc.nextInt();
+                if (a == sch) {
+                    System.out.println("Ура, вы угадали число");
+                    break;
+                } else {
+                    if (a < sch) {
+                        System.out.println("Загаданное число больше");
+                    } else System.out.println("Загаданное число меньше");
+                }
+                ;
+                if (i == 2)
+                    System.out.println("Увы вы проиграли");
+            }
+            System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
+            n = sc.nextInt();
+        } while (n==0);
+    }
+}
