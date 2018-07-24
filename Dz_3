@@ -1,4 +1,4 @@
-package ru.geekbrains.java1.dz_Enver_Eskendarov.dz2;
+package ru.geekbrains.java1.dz_Enver_Eskendarov.dz3;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -6,29 +6,37 @@ import java.util.Scanner;
 public class Dz_3 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         Random random = new Random();
         int sch = random.nextInt(10);
-        System.out.println("Введите число от 0 до 9");
         int n;
-        do  {
-            n = 1;
+        do {
+            System.out.println("Введите число от 0 до 9");
             for (int i = 0; i < 3; i++) {
                 int a = sc.nextInt();
                 if (a == sch) {
                     System.out.println("Ура, вы угадали число");
                     break;
-                } else {
-                    if (a < sch) {
-                        System.out.println("Загаданное число больше");
-                    } else System.out.println("Загаданное число меньше");
-                }
-                ;
-                if (i == 2)
+                } else if (a < sch) {
+                    System.out.println("Загаданное число больше");
+                } else
+                    System.out.println("Загаданное число меньше");
+
+                if (i == 2) {
                     System.out.println("Увы вы проиграли");
+                }
             }
             System.out.println("Повторить игру еще раз? 1 – да / 0 – нет");
-            n = sc.nextInt();
-        } while (n==0);
+
+            do {
+                switch (n = sc.nextInt()) {
+                    case 1:
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Пожалуйста введите 0 для выхода или 1 для продолжения ");
+                }
+            } while (n > 1);
+        } while (n == 1);
     }
 }
