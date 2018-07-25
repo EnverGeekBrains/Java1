@@ -1,6 +1,6 @@
-package ru.geekbrains.java1.dz.dz1.Enver_Eskendarov;
+package ru.geekbrains.java1.dz_Enver_Eskendarov.dz1;
 
-public class MainDz {
+public class Dz_1 {
     public static void main(String[] args) {
         byte a = 10;
         short b = 10000;
