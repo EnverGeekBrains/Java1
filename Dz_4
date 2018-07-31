@@ -3,80 +3,89 @@ package ru.geekbrains.java1.dz_Enver_Eskendarov.dz4;
 import java.util.Random;
 import java.util.Scanner;
 
+
 public class Dz_4 {
-    private static char[][] map = new char[3][3]; // игровое поле
-    private static Scanner sc = new Scanner(System.in); // Scanner для чтения консоли
-    private static Random rand = new Random(); // генератор случайных чисел
 
-    public static void initMap() { // инициализируем массив map(игровое поле)
-        for (int i = 0; i < 3; i++) { // двойным циклом проходимся по всему массиву
-            for (int j = 0; j < 3; j++) {
-                map[i][j] = '*'; // и заполняем каждую ячейку *
+    private static char[][] table = new char[5][5]; // Инициализация игровой таблицы 5x5
+    private static Scanner sc = new Scanner(System.in);
+    private static Random rand = new Random();
+
+    public static void initTable() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table[i][j] = '*';
             }
         }
-//        map[0][0] = '*';
-//        map[0][1] = '*';
-//        map[0][2] = '*';
-//        map[1][0] = '*';
-//        map[1][1] = '*';
-//        map[1][2] = '*';
-//        map[2][0] = '*';
-//        map[2][1] = '*';
-//        map[2][2] = '*';
-    }
+    } // заполняем ячейки ' * '
 
-    public static void printMap() { // выводим игровое поле в консоль
-        System.out.println("  1 2 3"); // первая строка с координатами
-        for (int i = 0; i < 3; i++) { // начинаем печатать поле
-            System.out.print((i + 1) + " "); // ставим номер строки 1-3
-            for (int j = 0; j < 3; j++) { // начинаем печатать строку
-                System.out.print(map[i][j] + " "); // посимвольно печатаем содержимое каждой ячейки поля
+    public static void printTable() {
+        System.out.println("  1 2 3 4 5");
+        for (int i = 0; i < 5; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < 5; j++) {
+                System.out.print(table[i][j] + " ");
             }
-            System.out.println(); // после распечатки строки, делаем перевод каретки
+            System.out.println();
         }
-        System.out.println(); // делаем дополнительный перевод строки
-    }
+        System.out.println();
+    } // выводим игровую таблицу в консоль
 
     public static void main(String[] args) {
-        initMap(); // инициализируем поле
-        printMap(); // печатаем в консоль
+        initTable();
+        printTable();
 
-        while (true) { // запускаем игровой цикл
-            humanTurn(); // ход человека
-            printMap(); // печать поля
-            if (isCheckWin('X')) { // проверка победы человека
+        while (true) {
+            goesPlayer();
+            printTable(); // печать поля
+            if (checkForWin('X')) { // проверка победы игрока
                 System.out.println("Победил игрок");
                 break;
             }
-            if (isMapFull()) break; // если поле заполнилось, завершаем игру
-            aiTurn(); // ход компьютера
-            printMap(); // печать поля
-            if (isCheckWin('O')) { // проверка победы компьютера
+            if (fullTable()) break; // если поле заполнилось, завершаем игру
+            goesComputer(); // ход компьютера
+            printTable();
+            if (checkForWin('O')) { // проверка победы компьютера
                 System.out.println("Победил компьютер");
                 break;
             }
-            if (isMapFull()) break;
+            if (fullTable()) break;
         }
         System.out.println("Game Over");
     }
 
 
-    public static boolean isCheckWin(char c) { // Проверяем победу
-        // Ищем заполненные горизонтальные линии
-        if (map[0][0] == c && map[0][1] == c && map[0][2] == c) return true;
-        if (map[1][0] == c && map[1][1] == c && map[1][2] == c) return true;
-        if (map[2][0] == c && map[2][1] == c && map[2][2] == c) return true;
-        // Ищем заполненные вертикальные линии
-        if (map[0][0] == c && map[1][0] == c && map[2][0] == c) return true;
-        if (map[0][1] == c && map[1][1] == c && map[2][1] == c) return true;
-        if (map[0][2] == c && map[1][2] == c && map[2][2] == c) return true;
-        // Ищем заполненные диагональные линии
-        if (map[0][0] == c && map[1][1] == c && map[2][2] == c) return true;
-        if (map[2][0] == c && map[1][1] == c && map[0][2] == c) return true;
-        return false;        // если ни одной линии не нашли, значит игрок еще не победил
-    }
+    private static boolean checkForWin(char c) {
 
-    private static void humanTurn() { // ход человека
+        for (int i = 0; i < 5; i++) {           // проходим по массиву, и считываем количество крестиков или ноликов
+            int h = 0, v = 0;
+            for (int j = 0; j < 5; j++) {
+                if (table[i][j] == c) {
+                    h++;                        // считываем крестики или нолики по строкам
+                } else h--;                     // исключаем не последовательно идущие крестики или нолики
+                if (table[j][i] == c) {
+                    v++;                        // считываем крестики или нолики по столбцам
+                } else v--;
+                if ((h == 4) || (v == 4)) {
+                    return true;                // победа если последовательно идут 4 символа крестиков или ноликов
+                }
+            }
+        }
+        int d1 = 0, d2 = 0;
+        for (int i = 0; i < 5; i++) {
+            if (table[i][i] == c) {
+                d1++;                           // считываем крестики или нолики по диагонали
+            } else d1--;
+            if (table[i][4 - i] == c) {
+                d2++;                           // считываем крестики или нолики по обратной диагонали
+            } else d2--;
+            if ((d1 == 4) || (d2 == 4)) {
+                return true;                    // победа если последовательно идут 4 символа крестиков или ноликов
+            }
+        }
+        return false;
+    }  // Метод проверки победы игрока или компьютера
+
+    private static void goesPlayer() {
         int x, y;
         do {
             System.out.println("Введите координаты в формате Х и У");
@@ -85,37 +94,32 @@ public class Dz_4 {
 
 
         } while (!isCellEmpty(x, y)); // пользователь вводит координаты до тех пор, пока не укажет на свободную ячейку
-        map[y][x] = 'X'; // после чего ставим туда Х
-    }
+        table[y][x] = 'X'; // после чего ставим туда Х
+    }   // ход игрока
 
-    private static boolean isMapFull() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (map[i][j] == '*') return false; // если на поле нашли хотя бы одну *, значит поле еще не заполнилось
+    private static boolean fullTable() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (table[i][j] == '*') return false;
             }
         }
         return true;
-    }
+    }  // если на поле нашли хотя бы одну *, значит поле еще не заполнилось
 
-    private static void aiTurn() {
+    private static void goesComputer() {
         int x, y;
         do { // компьютер пытается случайно выбрать незанятое поле для хода
-            x = rand.nextInt(3);
-            y = rand.nextInt(3);
+            x = rand.nextInt(5);
+            y = rand.nextInt(5);
         } while (!isCellEmpty(x, y));
-        map[y][x] = 'O'; // как только ячейка найдена, ставим туда О
+        table[y][x] = 'O'; // как только ячейка найдена, ставим туда О
     }
-//x 0 1 2
 
-    //    y
-//    0
-//    1
-//    2
     public static boolean isCellEmpty(int x, int y) { // проверка является ли ячейка свободной
-        if (x < 0 || x > 2 || y < 0 || y > 2)
-            return false; // если указаны неверные координаты, считаем что ячейка условно занята
-        if (map[y][x] != '*') return false; // если в ячейке не *, значит занята
-        return true; // ячейка свободна
-    }
+        if (x < 0 || x > 4 || y < 0 || y > 4)
+            return false;
+        if (table[y][x] != '*') return false;
+        return true;
+    } // проверка является ли ячейка свободной
 
 }
